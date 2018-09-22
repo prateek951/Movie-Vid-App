@@ -14,10 +14,10 @@ export default class Movies extends Component {
     const { movies } = this.state;
 
     if (movies.length === 0) {
-      return <p>There are no movies in the database!</p>;
+      return <h1>There are no movies in the database!</h1>;
     }
     return (
-      <div>
+      <React.Fragment>
         <p>Showing {movies.length} results.</p>
         <table className="table">
           <thead>
@@ -48,7 +48,7 @@ export default class Movies extends Component {
             ))}
           </tbody>
         </table>
-      </div>
+      </React.Fragment>
     );
   }
 }
