@@ -1,23 +1,25 @@
-import React, { Component } from 'react'
-import Like from './Like';
+import React, { Component } from "react";
+import Like from "./Like";
 
 export default class TableBody extends Component {
   render() {
-      const { movies, handleLike, handleDelete } = this.props;
+    
+    const { data, handleLike, handleDelete } = this.props;
+
     return (
-        <tbody>
-        {movies.map(movie => (
-          <tr key={movie._id}>
-            <td>{movie.title}</td>
-            <td>{movie.genre.name}</td>
-            <td>{movie.numberInStock}</td>
-            <td>{movie.dailyRentalRate}</td>
+      <tbody>
+        {data.map(item => (
+          <tr key={item._id}>
+            <td>{item.title}</td>
+            <td>{item.genre.name}</td>
+            <td>{item.numberInStock}</td>
+            <td>{item.dailyRentalRate}</td>
             <td>
-              <Like liked={movie.like} onClick={() => handleLike(movie)} />
+              <Like liked={item.like} onClick={() => handleLike(item)} />
             </td>
             <td>
               <button
-                onClick={() => handleDelete(movie)}
+                onClick={() => handleDelete(item)}
                 className="btn btn-danger btn-sm"
               >
                 Delete
@@ -26,6 +28,6 @@ export default class TableBody extends Component {
           </tr>
         ))}
       </tbody>
-    )
+    );
   }
 }
