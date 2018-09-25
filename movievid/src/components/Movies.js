@@ -5,7 +5,7 @@ import { paginate } from "../utils/paginate";
 import { getGenres } from "../services/fakeGenreService";
 import ListGroup from "./common/ListGroup";
 import MoviesTable from "./MoviesTable";
-import _ from 'lodash';
+import _ from "lodash";
 
 export default class Movies extends Component {
   state = {
@@ -13,7 +13,8 @@ export default class Movies extends Component {
     pageSize: 4,
     currentPage: 1,
     genres: [],
-    selectedGenre: {}
+    selectedGenre: {},
+    sortColumn: { sortBy: "title", order: "asc" }
   };
   componentDidMount() {
     const movies = getMovies();
@@ -43,26 +44,35 @@ export default class Movies extends Component {
     console.log(genre);
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
-  handleSort = (sortBy) => {
+  handleSort = sortBy => {
     // console.log('handleSort fired');
     console.log(sortBy);
-    const movies = [...this.state.movies];
-    const sortedMovies = this.sortMovies(movies,sortBy);
-    this.setState({ movies: sortedMovies });
+    this.setState({ sortColumn: { sortBy, order: "asc" } });
   };
-  sortMovies = (movies,sortBy) => {
-   return _.sortBy(movies,sortBy)
-  }
+  // Sorting using lodash in ascending order
+  // sortMovies = (movies,sortBy) => {
+  //  return _.sortBy(movies,sortBy)
+  // }
   render() {
-    const { movies, pageSize, selectedGenre, currentPage } = this.state;
+    const {
+      movies,
+      pageSize,
+      selectedGenre,
+      currentPage,
+      sortColumn
+    } = this.state;
     if (movies.length === 0) {
       return <h1>There are no movies in the database!</h1>;
     }
+    //Filtering the records
     const filtered =
       selectedGenre && selectedGenre._id
         ? movies.filter(m => m.genre._id === selectedGenre._id)
         : movies;
-    const movies_per_page = paginate(filtered, currentPage, pageSize);
+    // Sorting the filtered table using lodash
+    const sorted = _.orderBy(filtered, [sortColumn.sortBy],[sortColumn.order]);
+    // Pagination finally
+    const movies_per_page = paginate(sorted, currentPage, pageSize);
 
     return (
       <div className="row">
