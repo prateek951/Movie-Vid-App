@@ -11,7 +11,8 @@ export default class Movies extends Component {
     movies: [],
     pageSize: 4,
     currentPage: 1,
-    genres: []
+    genres: [],
+    selectedGenre: ''
   };
   componentDidMount() {
     const movies = getMovies();
@@ -25,71 +26,84 @@ export default class Movies extends Component {
     this.setState({ movies });
   };
   handleLike = movie => {
-    console.log('Like clicked..',movie);
+    console.log("Like clicked..", movie);
     const movies = this.state.movies.slice();
     const index = movies.indexOf(movie);
-    const mov = Object.assign({},movie);
+    const mov = Object.assign({}, movie);
     movies[index] = mov;
     movies[index].like = !movies[index].like;
     this.setState({ movies: movies });
-  }
+  };
   handlePageChange = page => {
-      console.log(page);
-      this.setState({currentPage: page});
-  }
+    console.log(page);
+    this.setState({ currentPage: page });
+  };
   handleGenreSelect = genre => {
     console.log(genre);
-    const movies = this.state.movies.filter(movie => movie.genre.name === genre.name);
-    this.setState({ movies : movies });
-  }
+    this.setState({ selectedGenre : genre });
+  };
   render() {
-    const { movies, pageSize, currentPage } = this.state;
+    const { movies, pageSize, selectedGenre, currentPage } = this.state;
     if (movies.length === 0) {
       return <h1>There are no movies in the database!</h1>;
     }
-    const movies_per_page = paginate(movies,currentPage,pageSize);
+    const filtered = selectedGenre ? movies.filter(m => m.genre._id === selectedGenre._id) : movies;
+    const movies_per_page = paginate(filtered, currentPage, pageSize);
 
     return (
       <div className="row">
-        <div className="col-2">
-          <ListGroup onGenreSelect={this.handleGenreSelect} genres={this.state.genres}/>
+        <div className="col-3">
+          <ListGroup
+            onGenreSelect={this.handleGenreSelect}
+            genres={this.state.genres}
+            selectedGenre={this.state.selectedGenre}  
+          />
         </div>
         <div className="col">
-        <p>Showing {movies_per_page.length} results.</p>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Genre</th>
-              <th>Stock</th>
-              <th>Rate</th>
-              <th></th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {movies_per_page.map(movie => (
-              <tr key={movie._id}>
-                <td>{movie.title}</td>
-                <td>{movie.genre.name}</td>
-                <td>{movie.numberInStock}</td>
-                <td>{movie.dailyRentalRate}</td>
-                <td><Like liked={movie.like} onClick={() => this.handleLike(movie)}/></td>
-                <td>
-                  <button
-                    onClick={() => this.handleDelete(movie)}
-                    className="btn btn-danger btn-sm"
-                  >
-                    Delete
-                  </button>
-                </td>
+          <p>Showing {filtered.length} results.</p>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Stock</th>
+                <th>Rate</th>
+                <th />
+                <th />
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <Pagination moviesCount={movies.length} currentPage={currentPage} pageSize={pageSize} onPageChange={this.handlePageChange}/>
+            </thead>
+            <tbody>
+              {movies_per_page.map(movie => (
+                <tr key={movie._id}>
+                  <td>{movie.title}</td>
+                  <td>{movie.genre.name}</td>
+                  <td>{movie.numberInStock}</td>
+                  <td>{movie.dailyRentalRate}</td>
+                  <td>
+                    <Like
+                      liked={movie.like}
+                      onClick={() => this.handleLike(movie)}
+                    />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => this.handleDelete(movie)}
+                      className="btn btn-danger btn-sm"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <Pagination
+            moviesCount={filtered.length}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            onPageChange={this.handlePageChange}
+          />
         </div>
-        
       </div>
     );
   }
