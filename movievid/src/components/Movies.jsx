@@ -1,18 +1,32 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
+import Like from "./common/Like";
 
 export default class Movies extends Component {
   state = {
-    movies: getMovies()
+    movies: [],
   };
+  componentDidMount() {
+    const movies = getMovies();
+    this.setState({ movies: movies });
+  }
+
   handleDelete = ({ _id }) => {
     console.log("[Movies] inside the handleDelete");
     const movies = this.state.movies.filter(m => m._id !== _id);
     this.setState({ movies });
   };
+  handleLike = movie => {
+    console.log('Like clicked..',movie);
+    const movies = this.state.movies.slice();
+    const index = movies.indexOf(movie);
+    const mov = Object.assign({},movie);
+    movies[index] = mov;
+    movies[index].like = !movies[index].like;
+    this.setState({ movies: movies });
+  }
   render() {
     const { movies } = this.state;
-
     if (movies.length === 0) {
       return <h1>There are no movies in the database!</h1>;
     }
@@ -26,6 +40,7 @@ export default class Movies extends Component {
               <th>Genre</th>
               <th>Stock</th>
               <th>Rate</th>
+              <th></th>
               <th />
             </tr>
           </thead>
@@ -36,6 +51,7 @@ export default class Movies extends Component {
                 <td>{movie.genre.name}</td>
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
+                <td><Like liked={movie.like} onClick={() => this.handleLike(movie)}/></td>
                 <td>
                   <button
                     onClick={() => this.handleDelete(movie)}
