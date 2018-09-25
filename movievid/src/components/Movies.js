@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
-import Like from "./common/Like";
 import Pagination from "./common/Pagination";
 import { paginate } from "../utils/paginate";
 import { getGenres } from "../services/fakeGenreService";
 import ListGroup from "./common/ListGroup";
+import MoviesTable from "./MoviesTable";
 
 export default class Movies extends Component {
   state = {
@@ -12,7 +12,7 @@ export default class Movies extends Component {
     pageSize: 4,
     currentPage: 1,
     genres: [],
-    selectedGenre: ''
+    selectedGenre: {}
   };
   componentDidMount() {
     const movies = getMovies();
@@ -62,42 +62,7 @@ export default class Movies extends Component {
         </div>
         <div className="col">
           <p>Showing {filtered.length} results.</p>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Stock</th>
-                <th>Rate</th>
-                <th />
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {movies_per_page.map(movie => (
-                <tr key={movie._id}>
-                  <td>{movie.title}</td>
-                  <td>{movie.genre.name}</td>
-                  <td>{movie.numberInStock}</td>
-                  <td>{movie.dailyRentalRate}</td>
-                  <td>
-                    <Like
-                      liked={movie.like}
-                      onClick={() => this.handleLike(movie)}
-                    />
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => this.handleDelete(movie)}
-                      className="btn btn-danger btn-sm"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <MoviesTable movies={movies_per_page} handleDelete={this.handleDelete} handleLike={this.handleLike}/>
           <Pagination
             moviesCount={filtered.length}
             currentPage={currentPage}
