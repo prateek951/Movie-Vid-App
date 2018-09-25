@@ -69,7 +69,7 @@ export default class Movies extends Component {
             ))}
           </tbody>
         </table>
-        <Pagination moviesCount={movies.length} pageSize={this.state.pageSize} onPageChange={this.handlePageChange}/>
+        <Pagination moviesCount={movies.length} pageSize={10} onPageChange={this.handlePageChange}/>
       </React.Fragment>
     );
   }
