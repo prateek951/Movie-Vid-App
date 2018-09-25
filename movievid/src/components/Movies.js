@@ -40,7 +40,7 @@ export default class Movies extends Component {
   };
   handleGenreSelect = genre => {
     console.log(genre);
-    this.setState({ selectedGenre : genre });
+    this.setState({ selectedGenre : genre, currentPage : 1});
   };
   render() {
     const { movies, pageSize, selectedGenre, currentPage } = this.state;
@@ -49,6 +49,7 @@ export default class Movies extends Component {
     }
     const filtered = selectedGenre && selectedGenre._id ? movies.filter(m => m.genre._id === selectedGenre._id) : movies;
     const movies_per_page = paginate(filtered, currentPage, pageSize);
+
 
     return (
       <div className="row">
