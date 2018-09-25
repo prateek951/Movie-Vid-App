@@ -44,17 +44,10 @@ export default class Movies extends Component {
     console.log(genre);
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
-  handleSort = sortBy => {
+  handleSort = sortColumn => {
     // console.log('handleSort fired');
-    console.log(sortBy);
-    const sortColumn = Object.assign({}, this.state.sortColumn);
-    if (sortColumn.sortBy === sortBy) {
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
-    }else {
-      sortColumn.sortBy = sortBy;
-      sortColumn.order = 'asc';
-    }
-    this.setState({ sortColumn });
+      this.setState({ sortColumn });
+    
   };
   // Sorting using lodash in ascending order
   // sortMovies = (movies,sortBy) => {
@@ -97,6 +90,7 @@ export default class Movies extends Component {
             movies={movies_per_page}
             handleDelete={this.handleDelete}
             handleLike={this.handleLike}
+            sortColumn={this.state.sortColumn}
           />
           <Pagination
             moviesCount={filtered.length}
