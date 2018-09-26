@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 
 export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
+    account: {
       username: "",
       password: ""
-    };
-  }
+    }
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     console.log("handleSubmit fired");
-    const { username, password:userpass } = this.state;
-    // console.log(`The user with username ${username} and the password ${userpass} is now logged in`); 
-    //async call to server and handle login 
-};
-  handleStringChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleStringChange = ({currentTarget:input}) => {
+    const account = { ...this.state.account }; 
+    account[input.name] = input.value;
+    this.setState({ account: account });
   };
   render() {
-    const { username, password } = this.state;
+    const { username, password } = this.state.account;
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit}>
@@ -29,6 +29,7 @@ export default class Login extends Component {
               <div className="form-group">
                 <label htmlFor="email">Username</label>
                 <input
+                  autoFocus
                   type="text"
                   className="form-control"
                   name="username"
