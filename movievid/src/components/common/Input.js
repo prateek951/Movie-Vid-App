@@ -1,11 +1,6 @@
 import React from 'react';
 
-const formatName = name => {
-    return name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();
-}
-
-
-const Input = ({name, placeholder, value, label, handleStringChange}) => {
+const Input = ({name, type, placeholder, value, label, handleStringChange}) => {
     return (
         <div className="row">
             <div className="col-md-6 col-md-offset-3">
@@ -13,7 +8,7 @@ const Input = ({name, placeholder, value, label, handleStringChange}) => {
                 <label htmlFor={name}>{label}</label>
                 <input
                   autoFocus
-                  type="text"
+                  type={type}
                   className="form-control"
                   name={name}
                   placeholder={placeholder}
