@@ -31,8 +31,8 @@ export default class Login extends Component {
     e.preventDefault();
     const { account } = this.state;
     const errors = this.validate(account);
-    console.log(errors);
-    this.setState({ errors: errors });
+    // console.log(errors);
+    this.setState({ errors: errors || {} });
     if(errors) return;
   }
 
