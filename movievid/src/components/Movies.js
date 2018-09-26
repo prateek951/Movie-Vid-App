@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { getMovies } from "../services/fakeMovieService";
+import { getGenres } from "../services/genreService";
 import Pagination from "./common/Pagination";
 import { paginate } from "../utils/paginate";
-import { getGenres } from "../services/fakeGenreService";
 import ListGroup from "./common/ListGroup";
 import MoviesTable from "./MoviesTable";
 import _ from "lodash";
@@ -19,9 +19,11 @@ export default class Movies extends Component {
     searchQuery: "",
     sortColumn: { sortBy: "title", order: "asc" }
   };
-  componentDidMount() {
+  async componentDidMount() {
     const movies = getMovies();
-    const genres = [{ name: "All Genres" }, ...getGenres()];
+    const { data : fetchedGenres} = await getGenres();
+    console.log(fetchedGenres);
+    const genres = [{ name: "All Genres" }, ...fetchedGenres];
     this.setState({ movies: movies, genres: genres });
   }
 
@@ -45,7 +47,7 @@ export default class Movies extends Component {
   };
   handleGenreSelect = genre => {
     console.log(genre);
-    this.setState({ selectedGenre: genre, searchQuery: '', currentPage: 1 });
+    this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
   };
   handleSort = sortColumn => {
     // console.log('handleSort fired');
@@ -69,10 +71,11 @@ export default class Movies extends Component {
     } = this.state;
     //Filtering the records
     let filtered = movies;
-    if(searchQuery) {
-      filtered = movies.filter(m => m.title.toLowerCase().startsWith(searchQuery.toLowerCase()));
-    }
-    else if(selectedGenre && selectedGenre._id) {
+    if (searchQuery) {
+      filtered = movies.filter(m =>
+        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    } else if (selectedGenre && selectedGenre._id) {
       filtered = movies.filter(m => m.genre._id === selectedGenre._id);
     }
     // Sorting the filtered table using lodash

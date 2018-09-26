@@ -88,7 +88,7 @@ class MovieForm extends Form {
           "Enter the dailyRentalRate"
         )}
         <button
-          onClick={this.handleSave}
+          onClick={this.handleSubmit}
           className="btn btn-primary"
           disabled={this.validate(this.state.data)}
         >
