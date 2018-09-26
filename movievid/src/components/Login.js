@@ -41,10 +41,21 @@ export default class Login extends Component {
     account[input.name] = input.value;
     this.setState({ account: account });
   };
+  renderErrors = () => {
+    const { errors } = this.state;
+    const myErrors = [];
+    for (const error in errors) {
+      if (errors.hasOwnProperty(error)) {
+        myErrors.push(errors[error]);
+      }
+    }
+    return myErrors.map((error,index) => <div key={index} className="alert alert-danger">{error}</div>);
+  }
   render() {
     const { username, password } = this.state.account;
     return (
       <div className="container">
+        {this.renderErrors()}
         <form onSubmit={this.handleSubmit}>
           <legend>Login</legend>
           <Input name="username" type="text" placeholder="Enter the username" value={username} label="Username" handleStringChange={this.handleStringChange}/>
