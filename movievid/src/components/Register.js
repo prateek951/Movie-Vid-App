@@ -16,11 +16,15 @@ export default class Register extends Form {
   schema = {
     username: Joi.string()
       .email()
-      .required().label('Username'),
-    password: Joi.string().required().label('Password'),
-    name: Joi.string().required().label('Name')
+      .required()
+      .label("Username"),
+    password: Joi.string()
+      .required()
+      .label("Password"),
+    name: Joi.string()
+      .required()
+      .label("Name")
   };
-
   makeSubmissionToServer() {
     //Async call to register
     console.log("Submitted");
