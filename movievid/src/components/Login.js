@@ -1,17 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import Joi from "joi-browser";
 import Input from "./common/Input";
+import Form from "./common/Form";
 
-export default class Login extends Component {
+export default class Login extends Form {
   state = {
-    account: {
+    data: {
       username: "",
       password: ""
     },
     errors: {}
   };
 
-  //Define the Joi Schema
+  //Define the Joi Schema for Login
   schema = {
     username: Joi.string()
       .required()
@@ -21,56 +22,15 @@ export default class Login extends Component {
       .label("Password")
   };
   //Joi sophisticated validation
-  validate = ({ username, password }) => {
-    const options = { abortEarly: false };
-    const { error } = Joi.validate(
-      { username, password },
-      this.schema,
-      options
-    );
-    if (!error) {
-      return null;
-    }
-    const errors = {};
+  
+   makeSubmissionToServer = () => {
+     //Async call to server
+     console.log("Submitted to the server");
+   }
 
-    for (let item of error.details) {
-      errors[item.path[0]] = item.message;
-    }
-    console.log(errors);
-    return errors;
-  };
-
-  validateProperty = ({ name, value }) => {
-    const obj = { [name]: value };
-    const options = { abortEarly: false };
-    const schema = { [name]: this.schema[name] };
-    const { error } = Joi.validate(obj, schema, options);
-    return error ? error.details[0].message : null;
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const { account } = this.state;
-    const errors = this.validate(account);
-    // console.log(errors);
-    this.setState({ errors: errors || {} });
-    if (errors) return;
-  };
-  handleStringChange = ({ currentTarget: input }) => {
-    const errors = Object.assign({}, this.state.errors);
-    const errorMessage = this.validateProperty(input);
-    if (errorMessage) {
-      errors[input.name] = errorMessage;
-    } else {
-      delete errors[input.name];
-    }
-    const account = Object.assign({}, this.state.account);
-    account[input.name] = input.value;
-    this.setState({ account: account, errors: errors });
-  };
 
   // ******************************* Below code is for the basic client side validation ************************************************************************************************************
-
+   //Reusable
   // validate = ({username,password}) => {
 
   //   //Basic Client Side validation
@@ -87,6 +47,7 @@ export default class Login extends Component {
 
   //   return Object.keys(errors).length === 0 ? null : errors;
   // }
+   // Reusable
   // validateProperty = ({name,value}) => {
   //   if(name === 'username') {
   //     if(value.trim() === '') {
@@ -100,7 +61,7 @@ export default class Login extends Component {
   //   }
   // }
   // Code for the basic form validation
-
+  // Reusable
   // handleStringChange = ({currentTarget:input}) => {
   //   const errors = Object.assign({},this.state.errors);
   //   const errorMessage = this.validateProperty(input);
@@ -109,9 +70,9 @@ export default class Login extends Component {
   //   }else {
   //     delete errors[input.name];
   //   }
-  //   const account = { ...this.state.account };
-  //   account[input.name] = input.value;
-  //   this.setState({ account: account, errors });
+  //   const data = { ...this.state.data };
+  //   data[input.name] = input.value;
+  //   this.setState({ data: data, errors });
   // };
 
   // renderErrors = () => {
@@ -128,7 +89,7 @@ export default class Login extends Component {
   //**************************************************************************************************************** */
 
   render() {
-    const { username, password } = this.state.account;
+    const { username, password } = this.state.data;
     const {
       username: usernameError,
       password: passwordError
@@ -156,8 +117,11 @@ export default class Login extends Component {
             label="Password"
             handleStringChange={this.handleStringChange}
           />
-          <button type="submit" className="btn btn-primary"
-          disabled={this.validate({username,password})}>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={this.validate({ username, password })}
+          >
             Login
           </button>
         </form>
