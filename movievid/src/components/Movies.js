@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { getMovies } from "../services/fakeMovieService";
 import Pagination from "./common/Pagination";
 import { paginate } from "../utils/paginate";
@@ -85,6 +86,7 @@ export default class Movies extends Component {
         </div>
         <div className="col">
           <p>Showing {filtered.length} results.</p>
+          <Link to={`/movies/new`} class="btn btn-primary">New Movie</Link>
           <MoviesTable
             onSort={this.handleSort}
             movies={movies_per_page}

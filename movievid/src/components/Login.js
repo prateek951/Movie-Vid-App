@@ -95,7 +95,7 @@ export default class Login extends Form {
       <div className="container">
         {/* {this.renderErrors()} */}
         <form onSubmit={this.handleSubmit}>
-          <legend>Login</legend>
+          <h1>Login</h1>
           {this.renderInput("username","Username","Enter the username")}
           {this.renderInput("password","Password","password","Enter the password")}
           {this.renderButton(this.state.myBtn,{username,password})}

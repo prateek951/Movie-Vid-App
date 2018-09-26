@@ -15,17 +15,16 @@ export default class Register extends Form {
   //Define the JOI sophisticated validation
   schema = {
     username: Joi.string()
-      .email()
       .required()
+      .email()
       .label("Username"),
     password: Joi.string()
-      .min(8)
       .required()
+      .min(8)
       .label("Password"),
     name: Joi.string()
       .required()
-      .label("Name"),
-    
+      .label("Name")
   };
 
   makeSubmissionToServer() {
@@ -38,7 +37,7 @@ export default class Register extends Form {
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit}>
-          <legend>Register</legend>
+          <h1>Register</h1>
           {this.renderInput(
             "username",
             "Username",
@@ -51,7 +50,7 @@ export default class Register extends Form {
             "password",
             "Enter the password"
           )}
-          {this.renderInput("name", "Name","text","Enter the full name")}
+          {this.renderInput("name", "Name", "text", "Enter the full name")}
           {this.renderButton(label, data)}
         </form>
       </div>
