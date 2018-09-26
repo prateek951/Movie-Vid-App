@@ -85,8 +85,8 @@ export default class Movies extends Component {
           />
         </div>
         <div className="col">
+          <Link to={`/movies/new`} style={{marginBottom: 20}} className="btn btn-primary">New Movie</Link>
           <p>Showing {filtered.length} results.</p>
-          <Link to={`/movies/new`} class="btn btn-primary">New Movie</Link>
           <MoviesTable
             onSort={this.handleSort}
             movies={movies_per_page}
