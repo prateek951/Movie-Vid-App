@@ -14,9 +14,6 @@ axios.interceptors.response.use(null, error => {
       winston.log(0,`Logging error ${error}`);
       //For displaying the toast notifications we can use the toast object
       toast.error("An unexpected error occured");
-      //For displaying some information we can use the toast function
-      //since in Javascript functions are objects
-      toast("An unexpected error occured");
     }
     return Promise.reject(error);
   });
