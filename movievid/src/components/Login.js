@@ -1,6 +1,5 @@
 import React from "react";
 import Joi from "joi-browser";
-import Input from "./common/Input";
 import Form from "./common/Form";
 
 export default class Login extends Form {
@@ -9,7 +8,8 @@ export default class Login extends Form {
       username: "",
       password: ""
     },
-    errors: {}
+    errors: {},
+    myBtn: 'Login'
   };
 
   //Define the Joi Schema for Login
@@ -99,31 +99,9 @@ export default class Login extends Form {
         {/* {this.renderErrors()} */}
         <form onSubmit={this.handleSubmit}>
           <legend>Login</legend>
-          <Input
-            name="username"
-            error={usernameError}
-            type="text"
-            placeholder="Enter the username"
-            value={username}
-            label="Username"
-            handleStringChange={this.handleStringChange}
-          />
-          <Input
-            name="password"
-            error={passwordError}
-            type="password"
-            placeholder="Enter the password"
-            value={password}
-            label="Password"
-            handleStringChange={this.handleStringChange}
-          />
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={this.validate({ username, password })}
-          >
-            Login
-          </button>
+          {this.renderInput("username","Username","text",username,"Enter the username",usernameError)}
+          {this.renderInput("password","Password","password",password,"Enter the password",passwordError)}
+          {this.renderButton(this.state.myBtn,{username,password})}
         </form>
       </div>
     );
