@@ -6,10 +6,10 @@ export default class Form extends Component {
     data: {},
     errors: {}
   };
-  validate = ({ username, password }) => {
+  validate = (data) => {
     const options = { abortEarly: false };
     const { error } = Joi.validate(
-      { username, password },
+      data,
       this.schema,
       options
     );
@@ -64,7 +64,7 @@ export default class Form extends Component {
       </button>
     );
   };
-  renderInput(name,label,type='text',placeholder) {
+  renderInput(name,label,type,placeholder) {
       const { errors, data} = this.state;
     return (
       <Input

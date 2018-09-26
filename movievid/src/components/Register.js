@@ -19,12 +19,15 @@ export default class Register extends Form {
       .required()
       .label("Username"),
     password: Joi.string()
+      .min(8)
       .required()
       .label("Password"),
     name: Joi.string()
       .required()
-      .label("Name")
+      .label("Name"),
+    
   };
+
   makeSubmissionToServer() {
     //Async call to register
     console.log("Submitted");
@@ -48,7 +51,7 @@ export default class Register extends Form {
             "password",
             "Enter the password"
           )}
-          {this.renderInput("name", "Name", "Enter the full namem")}
+          {this.renderInput("name", "Name","text","Enter the full name")}
           {this.renderButton(label, data)}
         </form>
       </div>
