@@ -7,18 +7,19 @@ export default class Login extends Component {
       username: "",
       password: ""
     },
-    errors: {
-     
-    }
+    errors: {}
   };
 
   validate = ({username,password}) => {
+  
     //Basic Client Side validation 
-
+  
     const errors = {};
+
     if(username.trim() === '') {
       errors.username = 'Username is required';
     }
+
     if(password.trim() === '') {
       errors.password = 'Password is required';
     }
