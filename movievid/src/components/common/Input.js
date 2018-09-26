@@ -2,11 +2,11 @@ import React from 'react';
 
 const Input = ({
     name, 
+    label, 
     error, 
     type, 
     placeholder, 
     value, 
-    label, 
     handleStringChange
 }) => {
     return (

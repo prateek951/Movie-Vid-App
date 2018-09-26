@@ -64,7 +64,7 @@ export default class Form extends Component {
       </button>
     );
   };
-  renderInput(name,label,type,placeholder) {
+  renderInput(name,label,type='text',placeholder) {
       const { errors, data} = this.state;
     return (
       <Input

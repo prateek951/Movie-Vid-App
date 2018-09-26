@@ -90,13 +90,13 @@ export default class Login extends Form {
 
   render() {
     const { username, password } = this.state.data;
-    
+
     return (
       <div className="container">
         {/* {this.renderErrors()} */}
         <form onSubmit={this.handleSubmit}>
           <legend>Login</legend>
-          {this.renderInput("username","Username","text","Enter the username")}
+          {this.renderInput("username","Username","Enter the username")}
           {this.renderInput("password","Password","password","Enter the password")}
           {this.renderButton(this.state.myBtn,{username,password})}
         </form>
