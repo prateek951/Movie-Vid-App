@@ -1,6 +1,14 @@
 import React from 'react';
 
-const Input = ({name, type, placeholder, value, label, handleStringChange}) => {
+const Input = ({
+    name, 
+    error, 
+    type, 
+    placeholder, 
+    value, 
+    label, 
+    handleStringChange
+}) => {
     return (
         <div className="row">
             <div className="col-md-6 col-md-offset-3">
@@ -16,6 +24,7 @@ const Input = ({name, type, placeholder, value, label, handleStringChange}) => {
                   value={value}
                   onChange={handleStringChange}
                 />
+                {error && <div className="alert alert-danger">{error}</div>}
               </div>
             </div>
           </div>
