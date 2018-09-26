@@ -64,14 +64,15 @@ export default class Form extends Component {
       </button>
     );
   };
-  renderInput(name,label,type,value,placeholder,usernameError) {
+  renderInput(name,label,type,placeholder) {
+      const { errors, data} = this.state;
     return (
       <Input
         name={name}
-        error={usernameError}
+        error={errors[name]}
         type={type}
         placeholder={placeholder}
-        value={value}
+        value={data[name]}
         label={label}
         handleStringChange={this.handleStringChange}
       />
