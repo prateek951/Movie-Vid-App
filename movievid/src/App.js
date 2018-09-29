@@ -15,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 class App extends Component {
-  state = { };
+  state = {};
 
   componentDidMount() {
     const user = auth.getCurrentUser();
@@ -26,14 +26,21 @@ class App extends Component {
     return (
       <React.Fragment>
         <ToastContainer />
-        <Navbar currentUser={currentUser}/>
+        <Navbar currentUser={currentUser} />
         <br />
         <Switch>
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
-          <Route path='/logout' component={Logout}/>
-          <Route path="/movies/:id" exact component={MovieForm} />
-          <Route path="/movies" exact render={props => <Movies {...props} user={currentUser}/>} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/movies/:id" exact render={props => {
+            if(!currentUser) return <Redirect to="/login"/>
+            return <MovieForm {...props}/>
+          }} />
+          <Route
+            path="/movies"
+            exact
+            render={props => <Movies {...props} user={currentUser} />}
+          />
           <Route path="/users" exact component={Users} />
           <Route path="/rentals" exact component={Rentals} />
           <Route path="/not-found" component={NotFound} />
