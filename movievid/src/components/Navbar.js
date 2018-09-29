@@ -50,7 +50,7 @@ const Navbar = ({currentUser}) =>  {
                 <NavLink className="nav-link" to="/movies">{currentUser.name}</NavLink>
               </li>
               <li className="nav-item">
-                <button className="nav-link btn btn-default btn-sm" to="/logout">Logout</button>
+                <NavLink className="nav-link btn btn-default btn-sm" to="/logout">Logout</NavLink>
               </li>
             </React.Fragment>}
           </ul>

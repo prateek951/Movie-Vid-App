@@ -10,19 +10,18 @@ import MovieForm from "./components/MovieForm";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Logout from "./components/Logout";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 class App extends Component {
-  state = {
-    currentUser: null
-  };
+  state = {  };
 
   componentDidMount() {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const decoded = jwtDecode(token);
-      // console.log(decoded);
+      console.log(decoded);
       this.setState({ currentUser: decoded });
     } catch (error) {}
   }
@@ -36,6 +35,7 @@ class App extends Component {
         <Switch>
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
+          <Route path='/logout' component={Logout}/>
           <Route path="/movies/:id" exact component={MovieForm} />
           <Route path="/movies" exact component={Movies} />
           <Route path="/users" exact component={Users} />
