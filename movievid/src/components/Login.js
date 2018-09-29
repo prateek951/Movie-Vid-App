@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/Form";
+import * as authService from "../services/authService";
 
 export default class Login extends Form {
   state = {
@@ -9,7 +10,7 @@ export default class Login extends Form {
       password: ""
     },
     errors: {},
-    myBtn: 'Login'
+    myBtn: "Login"
   };
 
   //Define the Joi Schema for Login
@@ -22,15 +23,25 @@ export default class Login extends Form {
       .label("Password")
   };
   //Joi sophisticated validation
-  
-   makeSubmissionToServer = () => {
-     //Async call to server
-     console.log("Submitted to the server");
-   }
 
+  makeSubmissionToServer = async () => {
+    //Async call to server
+    try {
+      const { username, password } = this.state.data;
+      const { data:token }= await authService.login(username, password);
+      console.log(token);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        const errors = Object.assign({}, this.state.errors);
+        errors.username = error.response.data;
+        this.setState({ errors: errors });
+      }
+    }
+    console.log("Submitted to the server");
+  };
 
   // ******************************* Below code is for the basic client side validation ************************************************************************************************************
-   //Reusable
+  //Reusable
   // validate = ({username,password}) => {
 
   //   //Basic Client Side validation
@@ -47,7 +58,7 @@ export default class Login extends Form {
 
   //   return Object.keys(errors).length === 0 ? null : errors;
   // }
-   // Reusable
+  // Reusable
   // validateProperty = ({name,value}) => {
   //   if(name === 'username') {
   //     if(value.trim() === '') {
@@ -96,9 +107,14 @@ export default class Login extends Form {
         {/* {this.renderErrors()} */}
         <form onSubmit={this.handleSubmit}>
           <h1>Login</h1>
-          {this.renderInput("username","Username","Enter the username")}
-          {this.renderInput("password","Password","password","Enter the password")}
-          {this.renderButton(this.state.myBtn,{username,password})}
+          {this.renderInput("username", "Username", "Enter the username")}
+          {this.renderInput(
+            "password",
+            "Password",
+            "password",
+            "Enter the password"
+          )}
+          {this.renderButton(this.state.myBtn, { username, password })}
         </form>
       </div>
     );
