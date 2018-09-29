@@ -1,14 +1,17 @@
 import jwtDecode from 'jwt-decode';
 import http from "./httpService";
 import config from '../config.json';
-
 const authendpoint = `${config.endpoint}/auth`;
 const AUTH_TOKEN = "token";
+
+
+//Getting rid of the bidirectional dependencies 
+
+http.setJwt(getJWT());
 
 function AuthEndPoint() {
     return `${authendpoint}`;
 }
-
 
 export async function login(email,password) {
   const {data: token } = await http.post(AuthEndPoint(),{email,password});
@@ -34,11 +37,15 @@ export function getCurrentUser() {
       }
 }
 
+export function getJWT() {
+    return localStorage.getItem(AUTH_TOKEN);
+}
 
 
 export default {
     login,
     logout,
     getCurrentUser,
-    loginWithJWT
+    loginWithJWT,
+    getJWT
 }

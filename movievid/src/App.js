@@ -15,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 class App extends Component {
-  state = {  };
+  state = { };
 
   componentDidMount() {
     const user = auth.getCurrentUser();
@@ -33,7 +33,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path='/logout' component={Logout}/>
           <Route path="/movies/:id" exact component={MovieForm} />
-          <Route path="/movies" exact component={Movies} />
+          <Route path="/movies" exact render={props => <Movies {...props} user={currentUser}/>} />
           <Route path="/users" exact component={Users} />
           <Route path="/rentals" exact component={Rentals} />
           <Route path="/not-found" component={NotFound} />

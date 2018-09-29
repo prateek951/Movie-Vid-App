@@ -79,6 +79,7 @@ export default class Movies extends Component {
       sortColumn,
       searchQuery
     } = this.state;
+    const { user } = this.props;  
     //Filtering the records
     let filtered = movies;
     if (searchQuery) {
@@ -103,13 +104,13 @@ export default class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link
+          { user && <Link
             to={`/movies/new`}
             style={{ marginBottom: 20 }}
             className="btn btn-primary"
           >
             New Movie
-          </Link>
+          </Link>}
           <p>Showing {filtered.length} results.</p>
           <Searchbar value={searchQuery} onChange={this.handleSearch} />
           <MoviesTable

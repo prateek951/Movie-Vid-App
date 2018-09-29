@@ -2,6 +2,9 @@ import axios from "axios";
 import winston from 'winston';
 import { toast } from "react-toastify";
 
+
+// For the protected api endpoints 
+
 axios.interceptors.response.use(null, error => {
     const expectedError =
       error.response &&
@@ -18,9 +21,14 @@ axios.interceptors.response.use(null, error => {
     return Promise.reject(error);
   });
 
+  function setJwt(token) {
+    axios.defaults.headers.common["x-auth-token"] = token;
+  }
+
 export default {
     get: axios.get,
     post: axios.post,
     put: axios.put, 
-    delete: axios.delete 
+    delete: axios.delete,
+    setJwt
 }
