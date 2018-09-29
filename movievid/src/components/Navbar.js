@@ -45,9 +45,14 @@ const Navbar = ({currentUser}) =>  {
               </NavLink>
             </li>
             </React.Fragment>)}
-            {currentUser && <li>
-              <Link className="nav-link"to="/movies">{currentUser.name}</Link>
-            </li>}
+            {currentUser && <React.Fragment>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/movies">{currentUser.name}</NavLink>
+              </li>
+              <li className="nav-item">
+                <button className="nav-link btn btn-default btn-sm" to="/logout">Logout</button>
+              </li>
+            </React.Fragment>}
           </ul>
         </div>
       </nav>

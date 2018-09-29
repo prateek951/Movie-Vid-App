@@ -39,7 +39,8 @@ export default class Register extends Form {
       //Set the token to the localStorage and redirect the user to the home page
       localStorage.setItem('token',JSON.stringify(response.headers['x-auth-token']));
       //On successful registration, push the user to the movies page 
-      this.props.history.push('/');      
+      // this.props.history.push('/');   
+      window.location = '/';   
   
     } catch (error) {
       if(error.response && error.response.status === 400) {

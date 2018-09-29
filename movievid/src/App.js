@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import jwtDecode from 'jwt-decode';
+import jwtDecode from "jwt-decode";
 import Movies from "./components/Movies";
 import Users from "./components/Users";
 import Rentals from "./components/Rentals";
@@ -14,23 +14,18 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 class App extends Component {
-  state = { 
-    currentUser : {}
-  }
+  state = {
+    currentUser: null
+  };
 
   componentDidMount() {
-
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
+      const token = JSON.parse(localStorage.getItem("token"));
       const decoded = jwtDecode(token);
       // console.log(decoded);
       this.setState({ currentUser: decoded });
-      
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
-  
   render() {
     const { currentUser } = this.state;
     return (

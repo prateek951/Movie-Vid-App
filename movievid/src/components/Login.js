@@ -35,8 +35,9 @@ export default class Login extends Form {
       //Set the token to the localStorage 
       localStorage.setItem('token',JSON.stringify(token));
       //Redirect the user to the home page 
-      this.props.history.push('/');
-    
+      // this.props.history.push('/');
+      //Full reload of the application 
+      window.location = '/';
     } catch (error) {
     
       if (error.response && error.response.status === 400) {
