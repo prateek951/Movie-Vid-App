@@ -1,7 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/Form";
-import * as authService from "../services/authService";
+import auth from "../services/authService";
 
 export default class Login extends Form {
   state = {
@@ -30,10 +30,7 @@ export default class Login extends Form {
     try {
       
       const { username, password } = this.state.data;
-      const { data:token }= await authService.login(username, password);
-      console.log(token);
-      //Set the token to the localStorage 
-      localStorage.setItem('token',JSON.stringify(token));
+      await auth.login(username, password);
       //Redirect the user to the home page 
       // this.props.history.push('/');
       //Full reload of the application 

@@ -2,6 +2,7 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/Form";
 import * as userService from "../services/userService";
+import auth from "../services/authService";
 
 export default class Register extends Form {
   state = {
@@ -37,7 +38,7 @@ export default class Register extends Form {
       const response = await userService.register(this.state.data);
       // console.log(response);
       //Set the token to the localStorage and redirect the user to the home page
-      localStorage.setItem('token',JSON.stringify(response.headers['x-auth-token']));
+      auth.loginWithJWT(JSON.stringify(response.headers['x-auth-token']));
       //On successful registration, push the user to the movies page 
       // this.props.history.push('/');   
       window.location = '/';   
