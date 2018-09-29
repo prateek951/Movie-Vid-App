@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import Joi from "joi-browser";
 import Form from "./common/Form";
 import auth from "../services/authService";
@@ -34,7 +35,8 @@ export default class Login extends Form {
       //Redirect the user to the home page 
       // this.props.history.push('/');
       //Full reload of the application 
-      window.location = '/';
+      const {state} = this.props.location;  
+      window.location = state ? state.from.pathname : "/";
     } catch (error) {
     
       if (error.response && error.response.status === 400) {
@@ -110,7 +112,7 @@ export default class Login extends Form {
 
   render() {
     const { username, password } = this.state.data;
-
+    if(auth.getCurrentUser()) return <Redirect to="/"/>
     return (
       <div className="container">
         {/* {this.renderErrors()} */}
