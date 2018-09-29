@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Logout from "./components/Logout";
 import auth from "./services/authService";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
@@ -23,7 +24,7 @@ class App extends Component {
   }
   render() {
     const { currentUser } = this.state;
-    
+
     return (
       <React.Fragment>
         <ToastContainer />
@@ -33,10 +34,7 @@ class App extends Component {
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
-          <Route path="/movies/:id" exact render={props => {
-            if(!currentUser) return <Redirect to="/login"/>
-            return <MovieForm {...props}/>
-          }} />
+          <ProtectedRoute path="/movies/:id" component={MovieForm}/>
           <Route
             path="/movies"
             exact
