@@ -23,7 +23,7 @@ export default class Movies extends Component {
   async componentDidMount() {
     const { data: fetchedMovies } = await getMovies();
     const { data: fetchedGenres } = await getGenres();
-    console.log(fetchedGenres);
+    console.log(fetchedMovies);
     const genres = [{ name: "All Genres" }, ...fetchedGenres];
     this.setState({ movies: fetchedMovies, genres: genres });
   }
