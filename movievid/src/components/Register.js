@@ -32,9 +32,15 @@ export default class Register extends Form {
     //Async call to register
     //Register the user by placing an async call to server 
     //and sent the user data in the body of the request 
-    //On successful registration, push the user to the movies page 
     try {
-      await userService.register(this.state.data);
+  
+      const response = await userService.register(this.state.data);
+      // console.log(response);
+      //Set the token to the localStorage and redirect the user to the home page
+      localStorage.setItem('token',JSON.stringify(response.headers['x-auth-token']));
+      //On successful registration, push the user to the movies page 
+      this.props.history.push('/');      
+  
     } catch (error) {
       if(error.response && error.response.status === 400) {
           //Client did something wrong 
