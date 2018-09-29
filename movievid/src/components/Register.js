@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import Joi from "joi-browser";
 import Form from "./common/Form";
 import * as userService from "../services/userService";
@@ -56,6 +57,9 @@ export default class Register extends Form {
 
   render() {
     const { label, data } = this.state;
+
+    if(auth.getCurrentUser()) return <Redirect to="/"/>
+
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit}>

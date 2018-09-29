@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Like from "./Like";
 import { Link } from "react-router-dom";
+import authService from "../../services/authService";
 export default class TableBody extends Component {
   render() {
     
     const { data, handleLike, handleDelete } = this.props;
-
     return (
       <tbody>
         {data.map(item => (
@@ -17,14 +17,14 @@ export default class TableBody extends Component {
             <td>
               <Like liked={item.like} onClick={() => handleLike(item)} />
             </td>
-            <td>
+            {authService.getCurrentUser() && <td>
               <button
                 onClick={() => handleDelete(item)}
                 className="btn btn-danger btn-sm"
               >
                 Delete
               </button>
-            </td>
+            </td>}
           </tr>
         ))}
       </tbody>
