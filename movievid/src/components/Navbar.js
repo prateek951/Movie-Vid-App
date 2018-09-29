@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 
-const Navbar = () =>  {
+const Navbar = ({currentUser}) =>  {
     return (
       <nav className="navbar navbar-expand-sm navbar-light bg-light">
         <Link className="navbar-brand" to="/movies">MovieVid</Link>
@@ -33,7 +33,8 @@ const Navbar = () =>  {
                 Rentals
               </NavLink>
             </li>
-            <li className="nav-item">
+            {!currentUser && (<React.Fragment>
+              <li className="nav-item">
               <NavLink className="nav-link" to="/login">
                 Login 
               </NavLink>
@@ -43,6 +44,10 @@ const Navbar = () =>  {
                 Register 
               </NavLink>
             </li>
+            </React.Fragment>)}
+            {currentUser && <li>
+              <Link className="nav-link"to="/movies">{currentUser.name}</Link>
+            </li>}
           </ul>
         </div>
       </nav>

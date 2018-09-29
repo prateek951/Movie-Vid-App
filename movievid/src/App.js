@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import jwtDecode from 'jwt-decode';
 import Movies from "./components/Movies";
 import Users from "./components/Users";
 import Rentals from "./components/Rentals";
@@ -13,11 +14,29 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 class App extends Component {
+  state = { 
+    currentUser : {}
+  }
+
+  componentDidMount() {
+
+    try {
+      const token = JSON.parse(localStorage.getItem('token'));
+      const decoded = jwtDecode(token);
+      // console.log(decoded);
+      this.setState({ currentUser: decoded });
+      
+    } catch (error) {
+      
+    }
+  }
+  
   render() {
+    const { currentUser } = this.state;
     return (
       <React.Fragment>
         <ToastContainer />
-        <Navbar />
+        <Navbar currentUser={currentUser}/>
         <br />
         <Switch>
           <Route path="/register" component={Register} />
