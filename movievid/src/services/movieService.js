@@ -21,7 +21,6 @@ export function deleteMovie(movieId) {
     return http.delete(getMovieUrlIfId(movieId));
 }
 
-
 export function saveMovie(movie) {
     if(movie._id) {
       const body = {...movie};

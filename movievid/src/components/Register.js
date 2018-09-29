@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/Form";
+import * as userService from "../services/userService";
 
 export default class Register extends Form {
   state = {
@@ -27,9 +28,12 @@ export default class Register extends Form {
       .label("Name")
   };
 
-  makeSubmissionToServer() {
+ async makeSubmissionToServer() {
     //Async call to register
-    console.log("Submitted");
+    //Register the user by placing an async call to server 
+    //and sent the user data in the body of the request 
+    //On successful registration, push the user to the movies page 
+    await userService.register(this.state.data);
   }
 
   render() {
