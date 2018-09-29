@@ -33,7 +33,17 @@ export default class Register extends Form {
     //Register the user by placing an async call to server 
     //and sent the user data in the body of the request 
     //On successful registration, push the user to the movies page 
-    await userService.register(this.state.data);
+    try {
+      await userService.register(this.state.data);
+    } catch (error) {
+      if(error.response && error.response.status === 400) {
+          //Client did something wrong 
+          const errors = Object.assign({},this.state.errors);
+          // Get the error message that is available from the server 
+          errors.username = error.response.data;
+          this.setState({ errors });
+      }
+    }
   }
 
   render() {
