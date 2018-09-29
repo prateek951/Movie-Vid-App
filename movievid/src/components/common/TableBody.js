@@ -17,7 +17,7 @@ export default class TableBody extends Component {
             <td>
               <Like liked={item.like} onClick={() => handleLike(item)} />
             </td>
-            {authService.getCurrentUser() && <td>
+            {authService.getCurrentUser() && authService.getCurrentUser().isAdmin && <td>
               <button
                 onClick={() => handleDelete(item)}
                 className="btn btn-danger btn-sm"
