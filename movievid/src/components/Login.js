@@ -9,6 +9,7 @@ export default class Login extends Form {
       username: "",
       password: ""
     },
+    token : '',
     errors: {},
     myBtn: "Login"
   };
@@ -27,15 +28,25 @@ export default class Login extends Form {
   makeSubmissionToServer = async () => {
     //Async call to server
     try {
+      
       const { username, password } = this.state.data;
       const { data:token }= await authService.login(username, password);
       console.log(token);
+      //Set the token to the localStorage 
+      localStorage.setItem('token',JSON.stringify(token));
+      //Redirect the user to the home page 
+      this.props.history.push('/');
+    
     } catch (error) {
+    
       if (error.response && error.response.status === 400) {
+    
         const errors = Object.assign({}, this.state.errors);
         errors.username = error.response.data;
         this.setState({ errors: errors });
+    
       }
+    
     }
     console.log("Submitted to the server");
   };
