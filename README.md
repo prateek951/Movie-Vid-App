@@ -6,12 +6,12 @@ Movie Vid application for displaying the list of all the movies and is based on 
 
 ## Getting Started
 
-'''
+```
 movievid-backend-api CD into the folder and run npm install 
 
 movievid (Clientside) CD into the folder and run npm install 
 
-'''
+```
 
 ### Prerequisites
 
