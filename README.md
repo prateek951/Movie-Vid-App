@@ -1,6 +1,6 @@
 
 
-# Project Title
+# MovieVid Application (MERN Stack)
 
 Movie Vid application for displaying the list of all the movies and is based on roles like the user and the admin.
 
